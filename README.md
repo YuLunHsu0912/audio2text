@@ -5,7 +5,8 @@
 ```
 pip install -r requirement.txt
 ```
-* 請將音檔放入file裡面
+* 請在程式碼的資料夾位置，創立一個名叫 file 的資料夾
+* 將音檔(.wav)放入file裡面
 * 在terminal 輸入指令
 ```
 python3 audio2text.py 
