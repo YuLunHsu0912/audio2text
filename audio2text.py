@@ -8,11 +8,7 @@ import numpy as np
 from inlp.convert import chinese
 from pydub import AudioSegment
 import numpy as np
-import argparse
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-c", "--cfg", type=str, default= None)
-args = parser.parse_args()
 
 def texts_to_one(path, target_file):
     files = os.listdir(path)
@@ -67,30 +63,29 @@ except Exception as e:
     print(e)
     
 if __name__ == "__main__":
-    audio_name=cfg['audio_name']
-    overlap_time=cfg['overlap_time']
-    print(audio_name)
-    os.mkdir('wav')
-    os.mkdir('txt')
-    audio = AudioSegment.from_file(audio_name, "wav")
-    audio_time = len(audio)#获取待切割音频的时长，单位是毫秒
-    cut_parameters = np.arange(10,audio_time/1000,10)  #np.arange()函数第一个参数为起点，第二个参数为终点，第三个参数为步长（10秒）
-    start_time = int(0)#开始时间设为0
-    ########################根据数组切割音频####################
-    for t in cut_parameters:
-        stop_time = int(t * 1000)  
-        audio_chunk = audio[start_time:stop_time] #音频切割按开始时间到结束时间切割
-        audio_chunk.export("wav/temp-{:03d}.wav".format(int(t/10)), format="wav")  # 保存音频文件，t/10只是为了计数，根据步长改变。步长为5就写t/5
-        start_time = stop_time - int(overlap_time)  #开始时间变为结束时间前4s---------也就是叠加上一段音频末尾的4s
-    voiceLanguage="zh-TW" 
-    wav_path='wav'
-    txt_path='txt'
-    thread_num=10
-    files = os.listdir(wav_path)
-    files.sort()
-    with concurrent.futures.ThreadPoolExecutor(max_workers=thread_num) as executor:
-        executor.map(VoiceToText_thread, files)
-    target_txtfile = "{}.txt".format(audio_name[:-4])
-    texts_to_one(txt_path, target_txtfile)
-    shutil.rmtree(wav_path)
-    shutil.rmtree(txt_path)
+    file_list = "0000" 
+    for file_name in file_list:
+        os.mkdir('wav')
+        os.mkdir('txt')
+        audio = AudioSegment.from_file("file/"+file_name, "wav")
+        audio_time = len(audio)
+        cut_parameters = np.arange(10,audio_time/1000,10)  
+        start_time = int(0)
+        for t in cut_parameters:
+            stop_time = int(t * 1000)  
+            audio_chunk = audio[start_time:stop_time] 
+            audio_chunk.export("wav/temp-{:03d}.wav".format(int(t/10)), format="wav")  
+            start_time = stop_time - int(overlap_time)  
+   
+        voiceLanguage="zh-TW" 
+        wav_path='wav'
+        txt_path='txt'
+        thread_num=10
+        files = os.listdir(wav_path)
+        files.sort()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=thread_num) as executor:
+            executor.map(VoiceToText_thread, files)
+        target_txtfile = "{}.txt".format(file_name[:-4])
+        texts_to_one(txt_path, target_txtfile)
+        shutil.rmtree(wav_path)
+        shutil.rmtree(txt_path)
