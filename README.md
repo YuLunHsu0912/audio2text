@@ -1,9 +1,12 @@
 # audio2text
-**注意事項**
+**使用步驟**
 
-請將音檔與程式碼放入同一個位置
-
-
+* 請將音檔與aduio2text.py cfg.json放入同一個位置
+* 更改cfg.json檔案裡面的參數
+* 在terminal 輸入指令
+```
+python3 aduio2text.py -c cfg.json
+```
 cfg.json：有兩個參數
-* audio_name：請更改成您的檔案名稱
-* overlap_time：每個小音檔重複的秒數
+* audio_name：請更改成您的音檔名稱(需為wav檔案)
+* overlap_time：因為本專案將每個音檔切成數個10秒的小音檔。每個小音檔會與前面小音檔重複您指定的秒數
