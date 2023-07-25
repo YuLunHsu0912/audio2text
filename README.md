@@ -9,7 +9,7 @@ pip install -r requirement.txt
 * 更改cfg.json檔案裡面的參數
 * 在terminal 輸入指令
 ```
-python3 aduio2text.py -c cfg.json
+python3 audio2text.py -c cfg.json
 ```
 * 執行完成時候，回在同樣的位置出現檔名一樣的txt，即是文字檔
 
