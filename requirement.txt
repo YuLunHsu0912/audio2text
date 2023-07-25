@@ -1,8 +1,2 @@
 SpeechRecognition
 iNLP
-os
-shutil
-wave
-json
-numpy
-argparse
