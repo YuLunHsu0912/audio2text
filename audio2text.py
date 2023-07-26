@@ -63,8 +63,10 @@ except Exception as e:
     print(e)
     
 if __name__ == "__main__":
-    file_list = "0000" 
+    file_list = os.listdir('file')
+    overlap_time = "0000"
     for file_name in file_list:
+        print(file_name)
         os.mkdir('wav')
         os.mkdir('txt')
         audio = AudioSegment.from_file("file/"+file_name, "wav")
@@ -89,3 +91,4 @@ if __name__ == "__main__":
         texts_to_one(txt_path, target_txtfile)
         shutil.rmtree(wav_path)
         shutil.rmtree(txt_path)
+        
